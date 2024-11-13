@@ -1,11 +1,24 @@
 // Importer le protocole http
 // require() permet d'importer le package,
 // ici le package importé est http
-const http = require('http');
+//Avant de convertir en ES, j'avais écrit :
+// const http = require("http"); => code seloin ES5 5 (avant 2015)
+import { createServer } from 'http'; // codage selon ES6 (2015)
+ import { app } from "./app.js";
+// const app = require("./app.js");
 
+
+app.set("port", 3000);
 // Déclaration du serveur en utilisant http
-const server = http.createServer((req, res) =>{
-   res.end("Bonjour, je suis le serveur.");
+// const serveur = http.createServer((req, res) => {});
+// On crée le serveur selon la recommandation ES6
+const server = createServer(app);
+server.listen(3000);
+/*
+const server = createServer((req, res) =>{
+   //En terme de réponse, renvoie au client le message "Bonjour, ..."
+   //Pour renvoyer le message de réponse, res utilise la méthode and()
+   res.end("Bonjour, je suis le serveur."); 
 });
 
 // Le serveur est disponible sur le port 3000
@@ -26,7 +39,7 @@ server.listen(3000);
 
 /*
 ===== En résumé =====
-1. Le projet node est initialisé avec la commande "node init"
+1. Le projet node est initialisé avec la commande "npm init"
 2. Un serveur node basique est lancé grâce
 à la méthode créateServeur venant du package http "http.crateServeur()"
 'req' signifie la requête de l'utilisateur effectuée le navigateur web
@@ -35,3 +48,5 @@ exemple, ici, le serveur retourne
 le message "Bonjour, Je suis le serveur."
 et ce grâce au code res.and("Bonjour, je suis le serveur.");
 */
+
+// Sur Google , recherche
