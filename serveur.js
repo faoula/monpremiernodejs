@@ -2,18 +2,31 @@
 // require() permet d'importer le package,
 // ici le package importé est http
 //Avant de convertir en ES, j'avais écrit :
-// const http = require("http"); => code seloin ES5 5 (avant 2015)
-import { createServer } from 'http'; // codage selon ES6 (2015)
- import { app } from "./app.js";
-// const app = require("./app.js");
+ const http = require("http");// => code seloin ES5 5 (avant 2015)
+// import { createServer } from 'http'; // codage selon ES6 (2015)
+// import { app } from "./app.js";
+ const app = require("./app.js");
 
+const numPort = 3002;
 
-app.set("port", 3000);
+app.set("port", numPort);
 // Déclaration du serveur en utilisant http
 // const serveur = http.createServer((req, res) => {});
 // On crée le serveur selon la recommandation ES6
-const server = createServer(app);
-server.listen(3000);
+const server = http.createServer(app);
+
+// Récupèrez l'heure ici
+const currentDate = new Date();
+
+server.listen(numPort, () => {
+   // Affichez l'heure 
+const currentTime = currentDate.toLocaleTimeString();
+console.log("message", currentTime);
+
+   //console.log(`Le serveur est activé au port ${numPort}`);
+   console.log("Le serveur est activité au port " , numPort);
+});
+
 /*
 const server = createServer((req, res) =>{
    //En terme de réponse, renvoie au client le message "Bonjour, ..."
