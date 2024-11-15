@@ -17,11 +17,13 @@ const server = http.createServer(app);
 
 // Récupèrez l'heure ici
 const currentDate = new Date();
+const date = new Date();
 
 server.listen(numPort, () => {
    // Affichez l'heure 
 const currentTime = currentDate.toLocaleTimeString();
 console.log("message", currentTime);
+console.log(date.toLocaleDateString()," ", date.toLocaleTimeString());
 
    //console.log(`Le serveur est activé au port ${numPort}`);
    console.log("Le serveur est activité au port " , numPort);
