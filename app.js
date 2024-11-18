@@ -1,7 +1,7 @@
 // import du framework ExpressJS
 // import express from "express";
  const express = require("express");
-
+ const url = require("url");
 // On crée l'application EXpressJS
  const app = express();
 //   app.use((req, res) => {
@@ -69,6 +69,88 @@ app.put("/contact", (req, res) => {
     res.end("SAINDOU");
 });
 // créer une route avec la méthode DELETE
-app.delete("/supprimer", (req, res) => {
-    res.end("ça va");
+
+/*
+=== API ===
+*/
+// format URL : localhost:3002/api/nom
+app.get("/api/nom", (req, res, next) => {
+    const monObjet = [{
+        nom: "SAINDOU",
+        prenom: "Faoula"
+    }];
+
+    // Retourne l'objet "monObjet" sous format JSON et retourne le code
+    res.status(200).json(monObjet);
+    next();
 });
+
+// format URL : localhost:3002/api/url
+app.get("/api/url", (req, res) => {
+    // Je retourne une réponse de HTML  et de status 200
+   res.writeHead(200, {'content-Type': 'text/html'});
+
+   res.write(req.url); // Récupère l'URL passé dans la requête
+
+   res.end(); // Fin de réponse
+});
+
+// format URL : localhost:3002/?annee=2024
+/* Exemple https://www.google.com/search?q=Mayotte
+ Analyse de l'URL :
+ l'url de base : https://www.google.com
+ l'url complet avec l'API '/search ' : https://www.google.com/search
+ l'url complet avec des parmètres.
+ les paramètres sont précédés par le point d'interogation '?'
+  Le mot-clé 'q' contient la valeur 'Mayotte' ?q=mayotte
+
+*/
+
+app.get("/", (req, res) => {
+    res.writeHead(200, {'content-Type': 'text/html'});
+    let query = url.parse(req.url, true).query;
+    let resultatAffiche = query.annee;
+    console.log("intérogation");
+    res.end(resultatAffiche);
+});
+
+/*
+=== Middleware ===
+Les middleware est un ensemble de finctions que l'on peut combiner
+dans un seul serveur.
+*/
+// Middleware 1
+// app.use((req, res, next) => {
+//     console.log("Votre message a bien été reçu.");
+//     next();
+//     //next();
+// });
+
+// // Middleware 2
+// app.use((req, res, next) => {
+//     res.status(201);
+//     next();
+// });
+
+// // Middleware 3
+// app.use((req, res, next) => {
+//     const date =new Date();
+//     res.json({
+//         heure : date.toLocaleTimeString(),
+//         typeRequest : req.method,
+//         requestBody: req.headers
+//     });
+//     next();
+// });
+
+// // Middleware 4
+// app.use((req, res) => {
+//     console.log("fin de Middleware!");
+// });
+/*app.use((req, res, ext) => { ...
+
+// on définit une route de type GET
+// gère les reqêtes GET vers la page d'accueil
+/*app.get("/", (req, res) => {
+   res.end("Akori, za serveur");
+})*/
